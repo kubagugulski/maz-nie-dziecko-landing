@@ -15,10 +15,56 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 
+const BookMockup = ({ title, subtitle, theme = 'orange' }: { title: string, subtitle: string, theme?: 'orange' | 'emerald' }) => {
+  const bg = 'bg-slate-800';
+  const accentColor = theme === 'orange' ? 'bg-orange-500' : 'bg-emerald-500';
+  const titleColor = 'text-white';
+  
+  return (
+    <div className="relative w-40 h-56 mx-auto group [perspective:1000px]">
+      <div className="w-full h-full relative transition-transform duration-700 [transform-style:preserve-3d] [transform:rotateY(-25deg)] group-hover:[transform:rotateY(-15deg)]">
+        
+        {/* Back Cover */}
+        <div className="absolute inset-0 bg-slate-900 rounded-r-md [transform:translateZ(-20px)] shadow-2xl"></div>
+
+        {/* Pages Edge (Right) */}
+        <div className="absolute top-[2%] right-0 w-[20px] h-[96%] bg-slate-200 origin-right [transform:rotateY(90deg)] flex flex-col justify-evenly border-y border-slate-300 overflow-hidden">
+          {[...Array(12)].map((_, i) => (
+            <div key={i} className="w-full h-[1px] bg-slate-300/50"></div>
+          ))}
+        </div>
+
+        {/* Pages Edge (Top) */}
+        <div className="absolute top-0 left-[2%] w-[96%] h-[20px] bg-slate-200 origin-top [transform:rotateX(-90deg)] border-x border-slate-300"></div>
+
+        {/* Spine */}
+        <div className="absolute top-0 left-0 w-[20px] h-full bg-slate-950 origin-left [transform:rotateY(-90deg)] rounded-l-sm flex items-center justify-center overflow-hidden">
+          <span className="text-[8px] text-slate-700 font-bold tracking-widest -rotate-90 whitespace-nowrap">{title}</span>
+        </div>
+
+        {/* Front Cover */}
+        <div className={`absolute inset-0 ${bg} rounded-r-md border-l-[12px] border-slate-950 shadow-[inset_4px_0_10px_rgba(0,0,0,0.2)] flex flex-col p-4 overflow-hidden [transform:translateZ(0)]`}>
+          <div className={`absolute top-0 right-0 w-24 h-24 ${accentColor} opacity-10 rounded-bl-full -mr-4 -mt-4`}></div>
+          <div className={`absolute bottom-0 left-0 w-16 h-16 ${accentColor} opacity-10 rounded-tr-full -ml-4 -mb-4`}></div>
+          
+          <div className="mt-2 relative z-10">
+            <h3 className={`font-black ${titleColor} text-xl leading-tight tracking-tight`}>{title}</h3>
+            <div className={`w-8 h-1 mt-3 ${accentColor}`}></div>
+          </div>
+          <div className="mt-auto relative z-10">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{subtitle}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-slate-900 text-slate-300 font-sans selection:bg-orange-500/30">
-      {/* Floating Toggle */}
+      {/* Floating Toggle
       <div className="fixed bottom-6 right-6 z-50">
         <div className="bg-slate-800 border border-slate-700 rounded-full p-1 flex shadow-2xl shadow-black/50">
           <button className="px-4 py-2 rounded-full bg-slate-700 text-white text-sm font-medium shadow-sm">
@@ -28,7 +74,7 @@ export default function Home() {
             Wersja dla Niej
           </button>
         </div>
-      </div>
+      </div> */}
 
       <main>
         {/* 1. Hero Section */}
@@ -55,8 +101,7 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <p className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Dowiedz się, dlaczego "pomaganie w domu" to Twój największy błąd i jak stać się facetem, na którym ona może polegać bez proszenia o pomoc.
-              </p>
+Dowiedz się, dlaczego Twoja nieporadność zabija jej libido – i jak Twoja sprawczość w domu może stać się najsilniejszym afrodyzjakiem w Waszej sypialni.              </p>
             </motion.div>
 
             <motion.div 
@@ -229,11 +274,8 @@ export default function Home() {
                 Konkretny plan działania, który wdrożysz od razu. Zero lania wody.
               </p>
               
-              <div className="flex justify-center mb-8">
-                <div className="w-40 h-52 bg-slate-700 rounded-lg border border-slate-600 flex items-center justify-center relative shadow-lg">
-                  <BookOpen className="w-12 h-12 text-slate-500" />
-                  <div className="absolute bottom-4 text-sm font-bold text-slate-400 text-center px-2">Mąż, nie dziecko</div>
-                </div>
+              <div className="flex justify-center mb-12 mt-8">
+                <BookMockup title="Mąż, nie dziecko" subtitle="Poradnik dla facetów" theme="orange" />
               </div>
 
               <ul className="space-y-3 text-slate-300 mb-8 max-w-sm mx-auto text-left">
@@ -242,14 +284,15 @@ export default function Home() {
                 <li className="flex items-center gap-3"><CheckCircle2 className="w-5 h-5 text-orange-500 shrink-0" /> Dostęp do aktualizacji</li>
               </ul>
 
-              <div className="mb-8">
-                <div className="text-5xl font-extrabold text-white">69 zł</div>
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="text-2xl text-slate-500 line-through">149 zł</span>
+                <span className="text-5xl font-extrabold text-white">69 zł</span>
               </div>
 
-              <button className="w-full sm:w-auto px-10 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold text-lg transition-all shadow-[0_0_30px_-10px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 mx-auto">
+              <a href="https://buy.stripe.com/cNi7sN4ZO1bHdQI0QgbMQ06" className="w-full sm:w-auto px-10 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-bold text-lg transition-all shadow-[0_0_30px_-10px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 mx-auto">
                 Kupuję samego ebooka
                 <ArrowRight className="w-5 h-5" />
-              </button>
+              </a>
 
               <div className="mt-6 flex items-center justify-center gap-2 text-slate-400 text-sm">
                 <ShieldCheck className="w-4 h-4 text-emerald-500" />
@@ -273,31 +316,26 @@ export default function Home() {
                 Ona ma swoją wersję, Ty masz swoją. Przestańcie się domyślać – zacznijcie grać do jednej bramki.
               </p>
               
-              <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-8">
-                <div className="w-32 h-40 bg-slate-700 rounded-lg border border-slate-600 flex items-center justify-center relative shadow-lg">
-                  <BookOpen className="w-10 h-10 text-slate-500" />
-                  <div className="absolute bottom-2 text-xs font-bold text-slate-400">Mąż, nie dziecko</div>
-                </div>
-                <div className="text-2xl font-bold text-slate-500">+</div>
-                <div className="w-32 h-40 bg-slate-700 rounded-lg border border-slate-600 flex items-center justify-center relative shadow-lg">
-                  <BookOpen className="w-10 h-10 text-slate-500" />
-                  <div className="absolute bottom-2 text-xs font-bold text-slate-400">Żona, nie matka</div>
-                </div>
+              <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 mb-12 mt-8">
+                <BookMockup title="Mąż, nie dziecko" subtitle="Poradnik dla facetów" theme="orange" />
+                <div className="text-4xl font-bold text-slate-600">+</div>
+                <BookMockup title="Żona, nie matka" subtitle="Poradnik dla kobiet" theme="emerald" />
+
               </div>
 
               <div className="mb-8">
                 <div className="flex items-center justify-center gap-3 mb-2">
-                  <span className="text-2xl text-slate-500 line-through">138 zł</span>
-                  <span className="text-5xl font-extrabold text-orange-500">109 zł</span>
+                  <span className="text-2xl text-slate-500 line-through">298 zł</span>
+                  <span className="text-5xl font-extrabold text-orange-500">119 zł</span>
                 </div>
                 <p className="text-lg text-emerald-400 font-medium">
-                  Kupując w pakiecie, oszczędzasz 29 zł
+                  Kupując w pakiecie, oszczędzasz
                 </p>
               </div>
 
-              <button className="w-full sm:w-auto px-8 py-4 bg-white text-slate-900 hover:bg-slate-100 rounded-lg font-bold text-lg transition-all shadow-xl flex items-center justify-center gap-2 mx-auto">
+              <a href="https://buy.stripe.com/5kQbJ38c05rX3c46aAbMQ07" className="w-full sm:w-auto px-8 py-4 bg-white text-slate-900 hover:bg-slate-100 rounded-lg font-bold text-lg transition-all shadow-xl flex items-center justify-center gap-2 mx-auto">
                 Wybieram Pakiet Partnerski
-              </button>
+              </a>
               
               <div className="mt-6 flex items-center justify-center gap-2 text-slate-400 text-sm">
                 <ShieldCheck className="w-4 h-4 text-emerald-500" />
@@ -339,6 +377,18 @@ export default function Home() {
                   Około 45 minut. Tyle, co jedna połowa meczu – a stawką jest Twój związek i święty spokój na co dzień.
                 </p>
               </div>
+
+              <div className="bg-slate-800/30 border border-slate-700 p-8 rounded-2xl">
+                <h3 className="text-xl font-bold text-white mb-4">Czy ten ebook zrobi ze mnie „pantofla”?</h3>
+                <p className="text-slate-400 leading-relaxed">
+Wręcz przeciwnie. Bycie „pantoflem” to bierne czekanie na instrukcje i strach przed gniewem żony. Ten ebook uczy Cię, jak przejąć stery, stać się decyzyjnym i odzyskać autorytet we własnym domu. Dowiesz się, jak być facetem, na którym można polegać, a nie kolejnym dzieckiem do upilnowania. Partnerstwo to nie uległość – to profesjonalne zarządzanie wspólnym życiem.                </p>
+              </div>
+
+              <div className="bg-slate-800/30 border border-slate-700 p-8 rounded-2xl">
+                <h3 className="text-xl font-bold text-white mb-4">Czy dostanę jakieś konkretne narzędzia, czy to tylko psychologiczne gadanie?</h3>
+                <p className="text-slate-400 leading-relaxed">
+Dostaniesz konkretną strategię. Ebook zawiera „Plan 7 dni na start” – prostą check-listę krok po kroku, co masz zrobić każdego dnia, żeby „odczarować” swój wizerunek w domu. Zero domysłów, same zadania bojowe: od logistyki zakupów po ogarnięcie dzieci bez pośrednictwa matki.                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -350,10 +400,10 @@ export default function Home() {
               Czas przestać pytać "w czym pomóc?". <br className="hidden md:block" />
               Czas zacząć ogarniać.
             </h2>
-            <button className="w-full sm:w-auto px-10 py-5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xl transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3 mx-auto">
+            <a href="https://buy.stripe.com/cNi7sN4ZO1bHdQI0QgbMQ06" className="w-full sm:w-auto px-10 py-5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-xl transition-all transform hover:scale-105 shadow-2xl flex items-center justify-center gap-3 mx-auto">
               Biorę ebooka i zmieniam zasady gry
               <ArrowRight className="w-6 h-6" />
-            </button>
+            </a>
           </div>
         </section>
       </main>
@@ -362,7 +412,7 @@ export default function Home() {
       <footer className="py-8 bg-slate-950 border-t border-slate-900 px-6 text-center">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-slate-500 text-sm">
-            &copy; {new Date().getFullYear()} MĄŻPRO. Wszelkie prawa zastrzeżone.
+            &copy; {new Date().getFullYear()} Mąż, nie dziecko. Wszelkie prawa zastrzeżone.
           </div>
           <div className="flex gap-6 text-sm">
             <Link to="/regulamin" className="text-slate-600 hover:text-slate-400 transition-colors">Regulamin</Link>
