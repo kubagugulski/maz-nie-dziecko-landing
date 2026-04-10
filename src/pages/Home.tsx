@@ -64,17 +64,17 @@ const BookMockup = ({ title, subtitle, theme = 'orange' }: { title: string, subt
 export default function Home() {
   return (
     <div className="min-h-screen bg-slate-900 text-slate-300 font-sans selection:bg-orange-500/30">
-      {/* Floating Toggle
+      {/* Floating Toggle */}
       <div className="fixed bottom-6 right-6 z-50">
         <div className="bg-slate-800 border border-slate-700 rounded-full p-1 flex shadow-2xl shadow-black/50">
-          <button className="px-4 py-2 rounded-full bg-slate-700 text-white text-sm font-medium shadow-sm">
-            Wersja dla Niego
-          </button>
-          <button className="px-4 py-2 rounded-full text-slate-400 hover:text-white text-sm font-medium transition-colors">
-            Wersja dla Niej
-          </button>
+          <a href="https://www.zonaniematka.pl/" className="px-4 py-2 rounded-full text-slate-400 hover:text-white text-sm font-medium shadow-sm">
+            Dla niej
+          </a>
+          <a href="/" className="px-4 py-2 rounded-full bg-slate-700 text-white text-sm font-medium transition-colors">
+            Dla Niego
+          </a>
         </div>
-      </div> */}
+      </div>
 
       <main>
         {/* 1. Hero Section */}
