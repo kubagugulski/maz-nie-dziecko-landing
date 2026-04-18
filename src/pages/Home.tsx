@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import { 
   CheckCircle2, 
@@ -11,9 +11,12 @@ import {
   Users, 
   MessageSquare, 
   Flame,
-  ArrowRight
+  ArrowRight,
+  X
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
+
+
 
 const BookMockup = ({ title, subtitle, theme = 'orange' }: { title: string, subtitle: string, theme?: 'orange' | 'emerald' }) => {
   const bg = 'bg-slate-800';
@@ -62,6 +65,35 @@ const BookMockup = ({ title, subtitle, theme = 'orange' }: { title: string, subt
 };
 
 export default function Home() {
+  const [showPromoBanner, setShowPromoBanner] = useState(true);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    // Countdown timer logic
+    const targetDate = new Date('2026-04-19T23:59:59').getTime();
+
+    const updateTimer = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-900 text-slate-300 font-sans selection:bg-orange-500/30">
       {/* Floating Toggle */}
@@ -75,6 +107,42 @@ export default function Home() {
           </a>
         </div>
       </div>
+
+      <AnimatePresence>
+        {showPromoBanner && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="sticky top-0 z-50 bg-orange-500 text-white overflow-hidden shadow-md"
+          >
+            <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
+              <div className="flex-1 flex flex-col md:flex-row justify-center items-center text-sm md:text-base font-medium text-center gap-2 md:gap-4">
+                <div>
+                  <span className="mr-2">🎉</span>
+                  <span>
+                    Promocja tylko do końca weekendu <strong className="font-bold">-20% na wszystko!</strong> Kod: <span className="bg-white/20 px-2 py-0.5 rounded font-mono font-bold tracking-wider ml-1">PROMO20</span>
+                  </span>
+                </div>
+                <div className="flex items-center bg-black/20 px-3 py-0.5 rounded-full text-sm font-mono font-bold shadow-inner">
+                  <Clock className="w-4 h-4 mr-1.5" />
+                  {timeLeft.days > 0 && <span className="mr-1">{timeLeft.days}d</span>}
+                  <span>{timeLeft.hours.toString().padStart(2, '0')}:</span>
+                  <span>{timeLeft.minutes.toString().padStart(2, '0')}:</span>
+                  <span>{timeLeft.seconds.toString().padStart(2, '0')}</span>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowPromoBanner(false)}
+                className="p-1 hover:bg-white/20 rounded-full transition-colors flex-shrink-0 ml-2"
+                aria-label="Zamknij banner"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <main>
         {/* 1. Hero Section */}
