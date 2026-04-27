@@ -108,7 +108,7 @@ export default function Home() {
         </div>
       </div>
 
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {showPromoBanner && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
@@ -142,7 +142,7 @@ export default function Home() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <main>
         {/* 1. Hero Section */}
