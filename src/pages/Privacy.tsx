@@ -12,7 +12,7 @@ export default function Privacy() {
         <h1 className="text-3xl md:text-4xl font-bold mb-8 text-stone-900">Polityka Prywatności</h1>
         
         <div className="prose prose-stone max-w-none bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-rose-100">
-          <h2 className="text-2xl font-bold mt-0 mb-4">Jakie dane osobiste zbieramy i dlaczego je zbieramy</h2>
+          <h2 className="zon-2xl font-bold mt-0 mb-4">Jakie dane osobiste zbieramy i dlaczego je zbieramy</h2>
           <p className="mb-4 text-stone-700">
             Administratorem danych osobowych mazniedziecko.pl jest firma Jakub Gugulski, Ratajów 30, 32-090 Słomniki, NIP: 6821811984.
           </p>
